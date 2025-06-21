@@ -15,7 +15,6 @@ import com.aluraChalenge.literatura.utilidades.Textos;
 
 import java.util.*;
 
-import java.util.stream.Collectors;
 
 
 @Component
@@ -93,13 +92,13 @@ public class OpcionesMenu {
             libroRepository.save(entidad);
             guardados++;
 
-            System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            System.out.println(Textos.SEPARADOR2);
             System.out.println("📖 Título: " + libro.titulo());
             System.out.println("👤 Autor: " + nombreAutor);
             System.out.println("🌐 Idiomas: " + libro.idiomas());
             System.out.println("⬇ Descargas: " + libro.descargasTotales());
             System.out.println("🔗 Enlace: " + libro.formatos().getOrDefault("text/html", "No disponible"));
-            System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            System.out.println(Textos.SEPARADOR2);
             System.out.println("✅ Libro guardado exitosamente.\n");
         }
 
@@ -120,14 +119,12 @@ public class OpcionesMenu {
         }
 
         System.out.println("\n📚 Libros registrados en la base de datos:");
-        System.out.println("--------------------------------------------------");
+        System.out.println(Textos.SEPARADOR);
 
         for (LibroEntidad libro : libros) {
             Textos.mostrarLibro(libro);
         }
     }
-
-
 
     public void mostrarAutoresEnBase() {
         List<AutorEntidad> autores = autorRepository.TodosLosAutoresConLibros();
@@ -139,10 +136,13 @@ public class OpcionesMenu {
         System.out.println("Los resultados se muestran alfabeticamente: ");
 
         for (AutorEntidad autor : autores){
+            System.out.println(Textos.SEPARADOR2);
+            System.out.println(Textos.SEPARADOR);
             System.out.println("\n👤 Autor: " + autor.getNombre() + " (" + autor.getLibros().size() + " libro(s))");
 
             for (LibroEntidad  libro : autor.getLibros()) {
                 System.out.println("   📘 " + libro.getTitulo());
+
             }
         }
 
@@ -157,7 +157,7 @@ public class OpcionesMenu {
 
             if (autoresVivos.isEmpty()) {
                 System.out.println("❌ No se encontraron autores vivos para el año " + anio);
-                System.out.println(Textos.SEPARADOR);
+                System.out.println(Textos.SEPARADOR2);
                 return;
             }
 
@@ -198,7 +198,6 @@ public class OpcionesMenu {
         }
     }
 
-
     public void mostrarLibrosMasDescargados() {
         List<LibroEntidad> libros = libroRepository.findAll();
 
@@ -216,8 +215,4 @@ public class OpcionesMenu {
                 .limit(5)
                 .forEach(Textos::mostrarLibro);
     }
-
-
-
-
 }
